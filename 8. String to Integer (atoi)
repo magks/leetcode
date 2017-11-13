@@ -1,0 +1,29 @@
+MAX_32_BIT_SIGNED_INT = 2147483647
+MIN_32_BIT_SIGNED_INT = -2147483648
+def returnInRange(num, minimum, maximum):
+        if num > maximum: return maximum
+        if num < minimum: return minimum
+        else:
+            return num
+class Solution:
+    def myAtoi(self, s):
+        try:
+            if not s: raise Exception
+            s = s.strip()
+            #if not s: raise Exception
+            return returnInRange(int(s), MIN_32_BIT_SIGNED_INT, MAX_32_BIT_SIGNED_INT)
+        except ValueError:
+                end = len(s)-1
+                r = 0 # pointer to mark valid integer substring
+                # check for optional initial plus or minus sign 
+                if s[r] in "+-":
+                    if ( r+1 >= end ): return 0 #no need to expand right ptr if invalid string "+" or "-" detected
+                    r += 1 # expand window using right pointer
+                if  r < end and not s[r].isdigit(): # s[r] not in "0123456789":
+                    return 0;
+                # check for digits and read them in to validStr variable
+                while r < end and s[r].isdigit():
+                    r += 1 # expand right pointer  
+                return returnInRange(int( s[:r] ), MIN_32_BIT_SIGNED_INT, MAX_32_BIT_SIGNED_INT)
+        except: # catch empty string
+            return 0

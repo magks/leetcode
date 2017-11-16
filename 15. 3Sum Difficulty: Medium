@@ -1,0 +1,35 @@
+class Solution:
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        
+        https://en.wikipedia.org/wiki/3SUM#cite_note-5
+        """
+        result = []
+        last = len(nums)-1
+        nums.sort()
+        for i in range(last-1):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            l = i + 1; r = last
+            while (l < r):
+                currL = nums[l]
+                currR = nums[r]
+                currI = nums[i]
+                
+                sum3 = currI +  currL + currR
+                if (sum3 < 0):
+                    l += 1
+                elif sum3 > 0:
+                    r -= 1
+                else:
+                    result.append([currI,currL,currR])
+                    while l < r and currL == nums[l+1]:
+                        l += 1
+                    while l < r and currR == nums[r-1]:
+                        r -= 1
+                    l += 1
+                    r -= 1
+        return result
+    
